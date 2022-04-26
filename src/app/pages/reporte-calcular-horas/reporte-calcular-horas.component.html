@@ -1,0 +1,151 @@
+<div class="row">
+    <div class="col 12">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <img src="https://visualled.com/wp-content/uploads/2020/03/support-u3262.png" class="img-thumbnail "
+                width="70" height="70" alt="logo">
+            <a style="padding: 20px;" class="fw-bolder" routerLink="/reporte-de-servicio">Reporte Tecnico</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="fw-bolder" routerLink="/reporte-horas">Calcular Horas</a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="card text-black bg-light  ">
+        <div class="card-header " style="background-color:darkgrey;"> Modulo De Calculo De Horas </div>
+        <div class="card-body">
+            <form [formGroup]="reporteDeServicioFormulario">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <h2 class="fw-bolder"> Identificacion Del Tecnico</h2>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" formControlName="idTecnico" class="form-control text-center"
+                            name="identificacionDeTecnico" id="identificacionDeTecnico">
+                        <div class="alert-danger"
+                            *ngIf="identificacionDeTecnico!.invalid && (identificacionDeTecnico!.dirty || identificacionDeTecnico!.touched)">
+
+                            <div class="container-error-message" *ngIf="identificacionDeTecnico!.errors!.required">
+                                Campo identificacion del tecnico requerida
+                            </div>
+                            <div class="container-error-message" *ngIf="identificacionDeTecnico!.errors!.minlength">
+                                La identificacion del tecnico debe tener 10 caracteres
+                            </div>
+                            <div class="container-error-message" *ngIf="identificacionDeTecnico!.errors!.maxlength">
+                                Supera los 10 caracteres permitidos
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-6">
+                        <h2 class="fw-bolder"> Numero De Semana</h2>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" formControlName="semana" class="form-control text-center" name="semana"
+                            id="semana">
+                        <div class="alert-danger" *ngIf="semanas!.invalid && (semanas!.dirty || semanas!.touched)">
+
+                            <div class="container-error-message" *ngIf="semanas!.errors!.required">
+                                Campo numero de semana requerido
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12">
+                        <button class="btn btn-primary" (click)="traerReportes() ; traerValorAPagar()">Calcular
+                            Nomina</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row text-center " style="padding-top: 150px;">
+        <div class="col-12">
+            <table class="table">
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th scope="col" style="background-color:silver; color:black">Id_Tecnico</th>
+                        <th scope="col" style="background-color:silver; color:black">Id_Servicio</th>
+                        <th scope="col" style="background-color:silver; color:black">Fecha Inicio</th>
+                        <th scope="col" style="background-color:silver; color:black">Fecha Fin</th>
+                        <th scope="col" style="background-color:silver; color:black">Hora Inicio</th>
+                        <th scope="col" style="background-color:silver; color:black">Hora Fin</th>
+                        <th scope="col" style="background-color:silver; color:black">Minutos Totales</th>
+                        <th scope="col" style="background-color:silver; color:black">Semana</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-white" *ngFor="let report of reportes ">
+
+                        <td>{{report.idTecnico}}</td>
+                        <td>{{report.idServicio}}</td>
+                        <td>{{report.fechaInicio}}</td>
+                        <td>{{report.fechaFin}}</td>
+                        <td>{{report.horaInicio}}</td>
+                        <td>{{report.horaFin}}</td>
+                        <td>{{report.horasTotales}}</td>
+                        <td>{{report.semana}}</td>
+
+                    </tr>
+
+                </tbody>
+
+
+            </table>
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col" style="background-color:silver; color: black;">Horas Diurnas: </th>
+                        <th scope="col" style="background-color:silver; color: black;">Valor Diurnas: </th>
+                        <th scope="col" style="background-color:silver; color: black;">Horas Nocturnas: </th>
+                        <th scope="col" style="background-color: silver; color: black;">Valor Nocturnas: </th>
+                        <th scope="col" style="background-color:silver; color: black;">Horas Dominicales: </th>
+                        <th scope="col" style="background-color: silver; color: black;">Valor Dominicales: </th>
+                        <th scope="col" style="background-color:silver; color: black;">Horas Extra Diurnas: </th>
+                        <th scope="col" style="background-color:silver; color: black;">Valor Extra Diurnas: </th>
+                        <th scope="col" style="background-color:silver; color: black;">Horas Extra Nocturnas: </th>
+                        <th scope="col" style="background-color: silver; color: black;">Valor Extra Nocturnas: </th>
+                        <th scope="col" style="background-color:silver; color: black;">Horas Extra Dominicales: </th>
+                        <th scope="col" style="background-color: silver; color: black;">Valor Extra Dominicales: </th>
+                        <th scope="col " style="background-color: silver; color: black;">VALOR TOTAL A PAGAR: </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{HorasDineroDto?.horasDiurnas}}</td>
+                        <td>{{HorasDineroDto?.totalDiurnas| currency}}</td>
+                        <td>{{HorasDineroDto?.horasNocturnas}}</td>
+                        <td>{{HorasDineroDto?.totalNocturnas | currency}}</td>
+                        <td>{{HorasDineroDto?.horasDominicales}}</td>
+                        <td>{{HorasDineroDto?.totalDominicales | currency}}</td>
+                        <td>{{HorasDineroDto?.horasExtraDiurnas}}</td>
+                        <td>{{HorasDineroDto?.totalExtraDiurnas| currency}}</td>
+                        <td>{{HorasDineroDto?.horasExtraNocturnas}}</td>
+                        <td>{{HorasDineroDto?.totalExtraNocturna| currency}}</td>
+                        <td>{{HorasDineroDto?.horasExtraDominicales}}</td>
+                        <td>{{HorasDineroDto?.totalExtraDominicales| currency}}</td>
+                        <td>{{HorasDineroDto?.totalAPagar | currency}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

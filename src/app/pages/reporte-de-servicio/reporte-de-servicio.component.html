@@ -1,0 +1,167 @@
+<div class="row">
+    <div class="col 12">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <img src="https://visualled.com/wp-content/uploads/2020/03/support-u3262.png" class="img-thumbnail "
+                width="70" height="70" alt="logo">
+            <a style="padding: 20px;" class="fw-bolder" routerLink="/reporte-de-servicio">Reporte Tecnico</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="fw-bolder" routerLink="/reporte-horas">Calcular Horas</a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+
+    </div>
+</div>
+<div class="container">
+    <div class="card text-black bg-light  ">
+        <div class="card-header " style="background-color:darkgrey;"> Reporte De Servicio Tecnico</div>
+        <div class="card-body">
+            <form #forma="ngForm" [formGroup]="reporteDeServicioFormulario">
+                <div class="row text-center  espacio-hacia-arriba">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <h2 class="fw-bolder"> Identificacion Del Tecnico</h2>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <input formControlName="identificacionDeTecnico" type="text" class="form-control text-center"
+                            name="identificacionDeTecnico" id="identificacionDeTecnico">
+                        <div class="alert-danger"
+                            *ngIf="identificacionDeTecnico!.invalid && (identificacionDeTecnico!.dirty || identificacionDeTecnico!.touched)">
+                            <div class="container-error-message" *ngIf="identificacionDeTecnico!.errors!.required">
+                                Campo de Identificacion del tecnico requerida
+                            </div>
+                            <div class="container-error-message" *ngIf="identificacionDeTecnico!.errors!.minlength">
+                                La identificacion del tecnico debe tener 10 caracteres
+                            </div>
+                            <div class="container-error-message" *ngIf="identificacionDeTecnico!.errors!.maxlength">
+                               Supera los 10 caracteres permitidos
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row text-center espacio-hacia-arriba">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <h2 class="fw-bolder">Identificacion Del Servicio</h2>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <input formControlName="identificacionDeServicio" type="text" class="form-control text-center"
+                            name="identificacionDeServicio" id="identificacionDeServicio">
+                        <div class="alert-danger"
+                            *ngIf="identificacionDeServicio!.invalid && (identificacionDeServicio!.dirty || identificacionDeServicio!.touched)">
+                            <div class="container-error-message" *ngIf="identificacionDeServicio!.errors!.required">
+                                Campo Id del servicio es requerido
+                            </div>
+                            <div class="container-error-message" *ngIf="identificacionDeServicio!.errors!.minlength">
+                                El Id del serivicio debe tener 3 a 6 caracteres
+                            </div>
+                            <div class="container-error-message" *ngIf="identificacionDeServicio!.errors!.maxlength">
+                                Supera los 6 caracteres permitidos 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <form #formaa="ngForm" [formGroup]="reporteDeServicioHora">
+
+                <div class="row text-center espacio-hacia-arriba">
+                    <div class="card-header" style="background-color:darkgrey;"></div>
+                    <div class="col-6">
+                        <div class="form-group espaciomed">
+                            <h2 class="fw-bolder">Fecha De Inicio</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center espacio-hacia-arriba">
+                    <div class="col-6">
+                        <input formControlName="fechaInicio" type="date" name="fechaInicio" id="fechaInicio"
+                            class="form-control text-center" value="2022-03-01" min="2022-01-01" max="2022-12-31">
+
+                        <div class="alert-danger"
+                            *ngIf="fechaInicio!.invalid && (fechaInicio!.dirty || fechaInicio!.touched)">
+
+                            <div class="container-error-message" *ngIf="fechaInicio!.errors!.required">
+                                Campo de fecha de inicio requerido
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <input formControlName="horaInicio" placeholder="Hora De Inicio" type="time"
+                            class="form-control text-center" name="horaInicio" id="horaInicio">
+                        <div class="alert-danger"
+                            *ngIf="horaInicio!.invalid && (horaInicio!.dirty || horaInicio!.touched)">
+
+                            <div class="container-error-message" *ngIf="horaInicio!.errors!.required">
+                                Campo de hora requerido
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row text-center espacio-hacia-arriba">
+                    <div class="col-6 espaciomed">
+                        <div class="form-group">
+                            <h2 class="fw-bolder"> Fecha De Fin</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center espacio-hacia-arriba">
+                    <div class="col-6">
+                        <input formControlName="fechaFin" type="date" name="fechaFin" id="fechaFin"
+                            class="form-control text-center" min="2022-01-01" max="2022-12-31"
+                            (change)="validarFechaDeInicioVsFinal()">
+                        <div class="alert-danger" *ngIf="fechaFin!.invalid && (fechaFin!.dirty || fechaFin!.touched)">
+                            <div class="container-error-message" *ngIf="fechaFin!.errors!.required">
+                                Campo de fecha fin requerido
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-3">
+                        <input formControlName="horaFin" placeholder="Hora De Fin" type="time"
+                            class="form-control text-center" name="horaFin" id="horaFin">
+                        <div class="alert-danger" *ngIf="horaFin!.invalid && (horaFin!.dirty || horaFin!.touched)">
+
+                            <div class="container-error-message" *ngIf="horaFin!.errors!.required">
+                                Campo de hora requerido
+                            </div>
+                        </div>
+                    </div>
+
+                  
+                 
+                </div>
+                <div class="row" *ngIf="fechaInvalida">
+                    <div class="col-12 text-center">
+                        <div class="alert-danger">
+                            <div class="container-error-message">
+                                La fecha de inicio no puede ser mayor a la fecha fin
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row text-center espacioButton">
+                <div class="col-12" >
+                    <button class="btn btn-primary" type="submit" (click)="enviarReporteDeServicio()">Ingresar
+                        Reporte</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
